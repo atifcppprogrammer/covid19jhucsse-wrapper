@@ -1,0 +1,15 @@
+{
+  "name": "covid19jhucsse-wrapper",
+  "version": "1.0.0",
+  "description": "A JavaScript wrapper for JHU-CSSE's Covid-19 dataset on GitHub.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Covid",
+    "Covid-19"
+  ],
+  "author": "atifcppprogrammer",
+  "license": "MIT"
+}
