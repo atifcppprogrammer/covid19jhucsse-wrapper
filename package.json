@@ -11,5 +11,8 @@
     "Covid-19"
   ],
   "author": "atifcppprogrammer",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.0"
+  }
 }
