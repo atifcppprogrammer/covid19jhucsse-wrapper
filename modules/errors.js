@@ -9,3 +9,9 @@ exports.datasetInitializationFailed = () => {
           .concat('to network error !');
   return new Error(message);
 }
+
+exports.incorrectDatasetType = () => {
+  const message = 'Specified Dataset type must be one of '
+	  .concat('[ confirmed, recovered, deaths ]');
+  return new Error(message);
+}
