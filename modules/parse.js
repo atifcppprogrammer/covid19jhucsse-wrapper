@@ -10,18 +10,19 @@ const extractDatasetRow = (dataset, lineContentArray) => {
   const [ region, country ] = lineContentArray.slice(0, 2);
   const figures = lineContentArray.splice(4);
   if (region !== '') {
-    if (dataset[country]) dataset[country] = { 
-      regions: { ...dataset[country].regions, [region]: figures } };
-    else dataset[country] = { regions:{ [region]: figures } };
+    if (dataset.countries[country]) 
+      dataset.countries[country] = { regions: { 
+	...dataset.countries[country].regions, [region]: figures } }
+    else dataset.countries[country] = { regions:{ [region]: figures } };
   }
-  else dataset[country] = figures;
+  else dataset.countries[country] = figures;
 }
 
 const parseDataset = type => new Promise(resolve => {
   const reader = readline.createInterface({
     input: fs.createReadStream(path.join(pathToCache, `${type}.csv`))
   });
-  let dataset = {}, count = 0;
+  let dataset = { dates:[], countries:{} }, count = 0;
   reader.on('line', lineContent => {
     lineContentArray = lineContent.split(',');
     if (count === 0) 
