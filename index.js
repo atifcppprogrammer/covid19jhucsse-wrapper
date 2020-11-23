@@ -6,25 +6,22 @@ const path = require('path');
 const fs = require('fs');
 
 const pathToCache = path.join(__dirname, 'cache');
+const datasets = {};
 
-let confirmed = undefined;
-let recovered = undefined;
-let deaths = undefined;
-
-const getPathForDataset = type => 
-  path.join(pathToCache, `${type}.json`);
+const getDatasetOfType = type => 
+  require(path.join(pathToCache, `${type}.json`));
 
 const refresh = async () => {
   const response = await scrape().then(() => parse())
     .then(() => ({ error: null })).catch(error => ({ error }));
   if (response.error) throw response.error;
 
-  confirmed = require(getPathForDataset('confirmed'));
-  recovered = require(getPathForDataset('recovered'));
-  deaths = require(getPathForDataset('deaths'));
+  datasets.confirmed = getDatasetOfType('confirmed');
+  datasets.recovered = getDatasetOfType('recovered');
+  datasets.deaths = getDatasetOfType('deaths');
 }
 
-const init = async () => {
+const init = (async () => {
   const exists = await fs.promises.access(pathToCache)
     .then(() => true).catch(() => false);
   if (!exists)
@@ -33,6 +30,15 @@ const init = async () => {
     .then(() => ({ error: null })).catch(error => ({ error }));
   if (response.error) 
     throw errors.datasetInitializationFailed();
-}
+})();
 
-init();
+exports.listCountries = async type => {
+  const response = await init.then(() => ({ error: null }))
+    .catch(error => ({ error }));
+  if (response.error) throw response.error;
+
+  const dataset = datasets['deaths'].countries;
+  return Object.keys(dataset).map(country => ({
+    country, regions:(dataset[country].regions !== undefined)
+  }));
+}
