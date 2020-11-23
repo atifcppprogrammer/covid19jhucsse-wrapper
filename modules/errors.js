@@ -12,6 +12,13 @@ exports.datasetInitializationFailed = () => {
 
 exports.incorrectDatasetType = () => {
   const message = 'Specified Dataset type must be one of '
-	  .concat('[ confirmed, recovered, deaths ]');
+          .concat('[ confirmed, recovered, deaths ]');
+  return new Error(message);
+}
+
+exports.givenDateOutOfBounds = () => {
+  const message = 'Specified date is outside of the dataset\'s bounding '
+	  .concat('dates use listBoundingDates() function to view said ')
+	  .concat('dates');
   return new Error(message);
 }
