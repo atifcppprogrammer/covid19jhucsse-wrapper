@@ -51,6 +51,15 @@ exports.getCountriesInDataset = async () => {
   }));
 }
 
+exports.getCountriesOrganizedByRegionInDataset = async () => {
+  const response = await init.then(() => ({ error: null }))
+    .catch(error => ({ error }));
+  if (response.error) throw response.error;
+
+  const dataset = datasets['deaths'].countries;
+  return Object.keys(dataset).filter(country => dataset[country].regions);
+}
+
 exports.getBoundingDatesForDataset = async () => {
   const response = await init.then(() => ({ error: null }))
     .catch(error => ({ error }));
