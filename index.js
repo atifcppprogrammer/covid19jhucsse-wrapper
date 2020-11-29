@@ -32,7 +32,7 @@ const init = (async () => {
     throw errors.datasetInitializationFailed();
 })();
 
-exports.listCountries = async type => {
+exports.getCountriesInDataset = async () => {
   const response = await init.then(() => ({ error: null }))
     .catch(error => ({ error }));
   if (response.error) throw response.error;
