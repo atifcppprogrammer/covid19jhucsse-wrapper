@@ -42,3 +42,12 @@ exports.getCountriesInDataset = async () => {
     country, regions:(dataset[country].regions !== undefined)
   }));
 }
+
+exports.getBoundingDatesForDataset = async () => {
+  const response = await init.then(() => ({ error: null }))
+    .catch(error => ({ error }));
+  if (response.error) throw response.error;
+  
+  const dates = datasets['deaths'].dates;
+  return { start: dates[0], end: dates[dates.length - 1] };
+}
