@@ -29,14 +29,13 @@ class DataContainer{
     const date = [ mm, dd, yy].join('/').toString();
     const target = this.dates.indexOf(date);
     if (target === -1) throw errors.givenDateOutOfBounds(date);
-    const postFiltering = [ this.dates[target], this.figures[target] ];
+    const postFiltering = [ [this.dates[target]] , [this.figures[target]] ] 
     return new DataContainer(...postFiltering);
   }
   
   get(){
-    const figures = this.figures;
-    const dates = this.dates;
-    return { dates, figures };
+    const figures = this.figures, dates = this.dates;
+    return dates.map((date, index) => ({ date, figure: figures[index] }));
   }
 
   constructor(dates, figures){
