@@ -1,6 +1,6 @@
 exports.networkRequestFailed = () => {
-  const message = 'Network Request intending to collect dataset '
-          .concat('from JHU-CSSE\'s GitHub Repository failed !');
+  const message = 'Network request intending to collect dataset '
+          .concat('from JHU-CSSE\'s GitHub repository failed !');
   return new Error(message);
 }
 
@@ -19,7 +19,7 @@ exports.incorrectDatasetType = givenType => {
 
 exports.givenDateOutOfBounds = () => {
   const message = 'Specified date is outside of the dataset\'s bounding '
-	  .concat('dates use listBoundingDates() function to view said ')
+	  .concat('dates use getBoundingDates() function to view these ')
 	  .concat('dates');
   return new Error(message);
 }
