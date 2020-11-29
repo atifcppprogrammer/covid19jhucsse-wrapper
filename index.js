@@ -33,6 +33,13 @@ const init = (async () => {
     throw errors.datasetInitializationFailed();
 })();
 
+exports.refreshDataset = async () => {
+  const response = await init.then(() => ({ error: null }))
+    .catch(error => ({ error }));
+  if (response.error) throw response.error;
+  return refresh();
+}
+
 exports.getCountriesInDataset = async () => {
   const response = await init.then(() => ({ error: null }))
     .catch(error => ({ error }));
