@@ -1,3 +1,4 @@
+const DataContainer = require('./modules/container');
 const errors = require('./modules/errors');
 const scrape = require('./modules/scrape');
 const parse = require('./modules/parse');
@@ -47,7 +48,28 @@ exports.getBoundingDatesForDataset = async () => {
   const response = await init.then(() => ({ error: null }))
     .catch(error => ({ error }));
   if (response.error) throw response.error;
-  
+
   const dates = datasets['deaths'].dates;
   return { start: dates[0], end: dates[dates.length - 1] };
+}
+
+exports.getCountryDataFromDataset = async (country, type, region = '') => {
+  const response = await init.then(() => ({ error: null }))
+    .catch(error => ({ error }));
+  if (response.error) throw response.error;
+
+  const validType = [ 'confirmed', 'recovered', 'deaths' ]
+    .indexOf(type) > -1;
+  if (!validType) throw errors.incorrectDatasetType(type);
+  const countryData = datasets[type].countries[country];
+  if (!countryData) throw errors.givenCountryNotFound(country, type);
+
+  if (countryData.regions && region === '')
+    throw errors.regionNotSpecified(country);
+  if (countryData.regions && !countryData.regions[region])
+    throw errors.regionNotFound(country, region);
+
+  const figures = region ? countryData.regions[region] : countryData;
+  const dates = datasets[type].dates;
+  return new DataContainer(dates, figures);
 }
