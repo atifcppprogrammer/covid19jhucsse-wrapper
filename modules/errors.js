@@ -10,8 +10,9 @@ exports.datasetInitializationFailed = () => {
   return new Error(message);
 }
 
-exports.incorrectDatasetType = () => {
-  const message = 'Specified Dataset type must be one of '
+exports.incorrectDatasetType = givenType => {
+  const message = `Given dataset type ${givenType} is invalid the `
+	  .concat('specified dataset type must be one of ')
           .concat('[ confirmed, recovered, deaths ]');
   return new Error(message);
 }
