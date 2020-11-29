@@ -23,3 +23,10 @@ exports.givenDateOutOfBounds = () => {
 	  .concat('dates');
   return new Error(message);
 }
+
+exports.givenCountryNotFound = (givenCountry, givenType) => {
+  const message = `No country with name ${givenCountry} found in dataset `
+          .concat(`of type ${givenType}, use getCountriesInDataset() to `)
+          .concat('view all countries in dataset.');
+  return new Error(message);
+}
