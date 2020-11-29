@@ -33,9 +33,10 @@ class DataContainer{
     return new DataContainer(...postFiltering);
   }
   
-  get(){
+  get(seperated = false){
     const figures = this.figures, dates = this.dates;
-    return dates.map((date, index) => ({ date, figure: figures[index] }));
+    return seperated ? { dates, figures } : 
+      dates.map((date, index) => ({ date, figure: figures[index] }));
   }
 
   constructor(dates, figures){
