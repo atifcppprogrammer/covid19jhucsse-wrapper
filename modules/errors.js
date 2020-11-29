@@ -30,3 +30,15 @@ exports.givenCountryNotFound = (givenCountry, givenType) => {
           .concat('view all countries in dataset.');
   return new Error(message);
 }
+
+exports.regionNotSpecified = givenCountry => {
+  const message = `Specification of region for ${givenCountry} is required `
+          .concat(`since data for ${givenCountry} is organized by region`);
+  return new Error(message);
+}
+
+exports.regionNotFound = (givenCountry, givenRegion) => {
+  const message = `No region with name ${givenRegion} found for `
+          .concat(`country ${givenCountry}`);
+  return new Error(message);
+}
